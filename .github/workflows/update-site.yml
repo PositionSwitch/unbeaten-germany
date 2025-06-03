@@ -28,12 +28,14 @@ jobs:
     - name: run script
       run: python import_requests.py
 
+      
     - name: commit and push changes
       env:
         TOKEN: ${{ secrets.PAT_TOKEN }}
       run: |
-        git config --local user.email "action@github.com"
+        git config --local user.email "action@github.com"  
         git config --local user.name "GitHub Action"
         git add index.html
         git diff --cached --quiet || git commit -m "Automatisches Update der Seite"
-        git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} HEAD:main
+        git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}.git
+        git push origin HEAD:main
