@@ -1,0 +1,37 @@
+name: Update AREDL site
+
+on:
+  schedule:
+    # cron Syntax: jede Stunde
+    - cron: '0 * * * *' 
+  workflow_dispatch:  # manuelles Auslösen möglich
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: clone Repo
+      uses: actions/checkout@v3
+
+    - name: setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+
+    - name: run script
+      run: python import_requests.py
+
+    - name: commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add index.html
+        git commit -m "Automatisches Update der Seite"
+        git push
+      continue-on-error: true
