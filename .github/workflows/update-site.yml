@@ -2,8 +2,8 @@ name: Update AREDL site
 
 on:
   schedule:
-    - cron: '0 * * * *' 
-  workflow_dispatch: 
+    - cron: '0 * * * *'  # every Hour
+  workflow_dispatch:
 
 jobs:
   update:
@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: clone Repo
       uses: actions/checkout@v3
+      with:
+        persist-credentials: true
 
     - name: setup Python
       uses: actions/setup-python@v4
@@ -31,6 +33,5 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add index.html
-        git commit -m "Automatisches Update der Seite"
+        git diff --cached --quiet || git commit -m "Automatisches Update der Seite"
         git push
-      continue-on-error: true
