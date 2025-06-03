@@ -29,13 +29,10 @@ jobs:
       run: python import_requests.py
 
       
-    - name: commit and push changes
-      env:
-        TOKEN: ${{ secrets.PAT_TOKEN }}
+    - name: push
       run: |
-        git config --local user.email "action@github.com"  
-        git config --local user.name "GitHub Action"
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
         git add index.html
-        git diff --cached --quiet || git commit -m "Automatisches Update der Seite"
-        git remote set-url origin https://x-access-token:${TOKEN}@github.com/${{ github.repository }}.git
-        git push origin HEAD:main
+        git commit -m "automatically updated html file" || echo "No Changes to Commit"
+        git push origin main
