@@ -2,9 +2,8 @@ name: Update AREDL site
 
 on:
   schedule:
-    # cron Syntax: jede Stunde
     - cron: '0 * * * *' 
-  workflow_dispatch:  # manuelles Auslösen möglich
+  workflow_dispatch: 
 
 jobs:
   update:
