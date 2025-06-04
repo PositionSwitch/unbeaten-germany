@@ -36,8 +36,10 @@ for level in all_levels:
 not_completed_in_germany.sort(key=lambda x: x["position"])
 
 # === TEXT GENERIEREN ===
+count = len(not_completed_in_germany)
+header = f"Anzahl nicht geschaffter level: {count}\n"
 lines = [f"{level['position']:>3}: {level['name']}" for level in not_completed_in_germany]
-full_text = "\n".join(lines)
+full_text = header + "\n" + "\n".join(lines)
 
 now = datetime.now()
 
